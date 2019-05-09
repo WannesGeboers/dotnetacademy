@@ -1,0 +1,61 @@
+﻿@model IEnumerable<dotNETacademy.Models.Evaluatie>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" asp-route-id="1">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Datum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Omschrijving)
+            </th>
+            <th>
+                Quotatie ( /10)
+            </th>
+            <th>
+                Bestand
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Datum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Omschrijving)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Punt)
+                </td>
+                <td>
+                    @if(!string.IsNullOrEmpty(item.BestandLocatie))
+                    {
+                    <a asp-action="Download" asp-route-id="@item.BestandLocatie" >
+                        <i class="far fa-file-powerpoint fa-2x"></i>
+                    </a>
+                    }                    
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

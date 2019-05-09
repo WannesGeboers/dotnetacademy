@@ -1,0 +1,49 @@
+﻿
+@model dotNETacademy.ViewModel.CreateEvaluatie
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Voeg evaluatie toe</h1>
+
+<h4>
+    @Html.DisplayFor(model => model.Evaluatie.Deelnemer.Voornaam)
+    @Html.DisplayFor(model => model.Evaluatie.Deelnemer.Naam)
+</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Evaluatie.DeelnemerId" />
+            <div class="form-group">
+                <label asp-for="Evaluatie.Datum" class="control-label"></label>
+                <input asp-for="Evaluatie.Datum" class="form-control" />
+                <span asp-validation-for="Evaluatie.Datum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Evaluatie.Omschrijving" class="control-label"></label>
+                <input asp-for="Evaluatie.Omschrijving" class="form-control" />
+                <span asp-validation-for="Evaluatie.Omschrijving" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Evaluatie.Punt" class="control-label"></label>
+                <input asp-for="Evaluatie.Punt" class="form-control" />
+                <span asp-validation-for="Evaluatie.Punt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Bestand" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

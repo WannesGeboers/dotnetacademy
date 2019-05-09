@@ -1,0 +1,67 @@
+﻿@model dotNETacademy.ViewModel.ListFacturatieViewModel
+
+@{
+    ViewData["Title"] = "Facturatie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@*<a asp-action="Facturatie" asp-route-id="Nog te betalen" class="btn btn-info my-2">Enkel 'nog te betalen facturen' weergeven</a>*@
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Facturen[0].FormattedDatum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Facturen[0].Omschrijving)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Facturen[0].Prijs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Facturen[0].IsVereffend)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Facturen)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FormattedDatum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Omschrijving)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prijs)
+                </td>
+                <td>
+                    @if (item.IsVereffend)
+                    {
+                        <i class="fas fa-check-circle" title="is vereffend" style="color:green"></i>
+                    }
+                    else
+                    {
+                        <i class="fas fa-times-circle" title="nog te betalen" style="color:darkred"></i>
+                    }
+                </td>
+                <td>
+                    @if (item.IsVereffend)
+                    {
+                        <a asp-action="DetailsFacturatie" asp-route-id="@item.Id"><i class="fas fa-eye" title="Factuur bekijken"></i></a>
+                    }
+                    else
+                    {
+                        <a asp-action="DetailsFacturatie" asp-route-id="@item.Id"><i class="fas fa-eye-slash" title="Factuur nog niet beschikbaar"></i></a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

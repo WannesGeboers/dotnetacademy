@@ -1,0 +1,38 @@
+﻿@model dotNETacademy.ViewModel.DeelnemerViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Deelnemer</h4>
+    <hr />
+
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Deelnemer.Naam)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Deelnemer.Naam)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Deelnemer.Voornaam)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Deelnemer.Voornaam)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Deelnemer.OpenstaandeCredits)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Deelnemer.OpenstaandeCredits)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Deelnemers">Terug naar deelnemers</a>
+</div>

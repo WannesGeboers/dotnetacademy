@@ -1,0 +1,88 @@
+﻿@model dotNETacademy.ViewModel.ListDeelnemersViewModel
+@{
+    ViewData["Title"] = "Deelnemers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Alle deelnemers van @Model.Customer.Bedrijfsnaam</h2>
+<!-- modal view speler toevoegen JIEHA!! -->
+<a class="btn btn-success btn-block" asp-action="Create" asp-controller="Deelnemer" data-target="#modal-container" data-toggle="modal">Nieuwe Deelnemer</a>
+
+<div class="modal fade" id="modal-container" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Wissen</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <partial name="_Create" model='new dotNETacademy.ViewModel.ListDeelnemersViewModel() { Id = Model.Customer.Id }' />
+            </div>
+        </div>
+    </div>
+</div>
+<!-- bread crumbs -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        @if (User.IsInRole("Admin"))
+        {
+            <li class="breadcrumb-item"><a asp-controller="Customer" asp-action="Index" asp-route-id="@Model.Customer.Id">@Model.Customer.Bedrijfsnaam</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Deelnemers</li>
+        }
+        else
+        {
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Data</li>
+        }
+    </ol>
+</nav>
+
+@if (Model.Deelnemers.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(Model => Model.Deelnemers[0].Naam)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Deelnemers[0].Voornaam)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Deelnemers[0].OpenstaandeCredits)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Deelnemers)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Naam)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Voornaam)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OpenstaandeCredits)
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Beheren</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>
+        Geen deelnemers gevonden!
+    </p>
+}
+
+

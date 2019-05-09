@@ -1,0 +1,208 @@
+﻿@model dotNETacademy.ViewModel.Admin_IndexViewModel
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Jaarabonnementen</h1>
+
+<table class="table">
+    <tr>
+        <th>@DateTime.Now.Year</th>
+        <th>MaandInkomsten</th>
+        <th>Goud</th>
+        <th>Zilver</th>
+        <th>Brons</th>
+    </tr>
+    @for (int maand = 0; maand < Model.MaandenInJaar.Length; maand++)
+    {
+        <tr>
+            <!--bouw tabel op met maanden -->
+            <!-- creeer achterliggende tabel met dropdown arrow -->
+            <td>
+                <a data-toggle="collapse" href="#@Model.MaandenInJaar[maand]" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="fas fa-chevron-right"></i></a>
+                @Html.DisplayName(Model.MaandenInJaar[maand])
+                <div class="collapse" id="@Model.MaandenInJaar[maand]">
+                    <div class="card card-body">
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>Datum</th>
+                                <th>Klant</th>
+                                <th>Gold</th>
+                                <th>Silver</th>
+                                <th>Bronze</th>
+                            </tr>
+                            @for (int i = 0; i < Model.lijstJaarabonnementenInHuidigJaar.Where(x => (x.Startdatum.Month-1) == (maand)).Count(); i++)
+                            {
+                                <tr>
+                                    <td>@(i+1)</td>
+                                    <td>
+                                        @Model.lijstJaarabonnementenInHuidigJaar[i].Startdatum
+                                    </td>
+                                    <td>
+                                        <a asp-controller="Customer" asp-action="Index" asp-route-id="@Model.lijstJaarabonnementenInHuidigJaar[i].CustomerId">
+                                            @Model.lijstCustomers.Find(x => x.Id == Model.lijstJaarabonnementenInHuidigJaar[i].CustomerId).Bedrijfsnaam
+                                        </a>
+                                    </td>
+                                    <!-- Prijs abonnement tonen indien gold -->
+                                    <td>@((Model.lijstJaarabonnementenInHuidigJaar[i].JaarAbonnement.Omschrijving != "Gold") ? "" : Model.lijstJaarabonnementenInHuidigJaar[i].Prijs.ToString("€ 0.00"))</td>
+
+                                    <!-- Prijs abonnement tonen indien silver -->
+                                    <td>@((Model.lijstJaarabonnementenInHuidigJaar[i].JaarAbonnement.Omschrijving != "Silver") ? "" : Model.lijstJaarabonnementenInHuidigJaar[i].Prijs.ToString("€ 0.00"))</td>
+
+                                    <!-- Prijs abonnement tonen indien Bronze -->
+                                    <td>@((Model.lijstJaarabonnementenInHuidigJaar[i].JaarAbonnement.Omschrijving != "Bronze") ? "" : Model.lijstJaarabonnementenInHuidigJaar[i].Prijs.ToString("€ 0.00"))</td>
+
+                                </tr>
+
+                            }
+                        </table>
+                    </div>
+                </div>
+            </td>
+            @{
+                decimal maandprijs = 0;
+                int aantalGold = 0;
+                int aantalSilver = 0;
+                int aantalBronze = 0;
+
+                for (int i = 0; i < Model.lijstJaarabonnementenInHuidigJaar.Where(x => (x.Startdatum.Month-1) == maand).Count(); i++)
+                {
+                    maandprijs += Model.lijstJaarabonnementenInHuidigJaar[i].Prijs;
+                    switch (Model.lijstJaarabonnementenInHuidigJaar[i].JaarAbonnement.Omschrijving)
+                    {
+                        case "Gold":
+                            aantalGold++;
+                            break;
+                        case "Silver":
+                            aantalSilver++;
+                            break;
+                        case "Bronze":
+                            aantalBronze++;
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+
+                <!-- maandprijs tonen indien niet 0 -->
+                <td>@((maandprijs == 0) ? "" : maandprijs.ToString("€ 0.00"))</td>
+
+                <!-- aantal Gold tonen indien niet 0 -->
+                <td>@((aantalGold == 0) ? "" : aantalGold.ToString())</td>
+
+                <!-- aantal Silver tonen indien niet 0 -->
+                <td>@((aantalSilver == 0) ? "" : @aantalSilver.ToString())</td>
+
+                <!-- aantal Bronze tonen indien niet 0 -->
+                <td>@((aantalBronze == 0) ? "" : @aantalBronze.ToString())</td>
+            }
+        </tr>
+    }
+
+    <tr>
+        <td>Totalen</td>
+        <td>
+            @Model.TotaalPrijs
+        </td>
+        <td>@Model.TotaalGoud</td>
+        <td>@Model.TotaalZilver</td>
+        <td>@Model.TotaalBrons</td>
+    </tr>
+
+</table>
+
+    <!-- prullenbak -->
+
+    @*@for (int maand = 0; maand < Model.MaandenInJaar.Length; maand++)
+            {
+            <tr>
+                <!--bouw tabel op met maanden -->
+                <td>@Html.DisplayName(Model.MaandenInJaar[maand])</td>
+
+                <!--  zoek per maand alle jaarabonnementen -->
+                @for (int abo = 0; abo < Model.lijstJaarabonnementenInHuidigJaar.Where(x => x.Startdatum.Month == maand).Count(); abo++)
+                {
+                    <td>
+                        <!-- Namen -->
+                        <ul>
+                            <li>@Html.DisplayFor(model => Model.lijstJaarabonnementenInHuidigJaar[abo].CustomerId)</li>
+                        </ul>
+                    </td>
+                    <!-- prijs -->
+                    <td></td>
+
+                    <!-- Abo Gold -->
+                    <td>
+                        <ul>
+                            <!-- controle welk abonnement-->
+                            @if (Model.lijstJaarabonnementenInHuidigJaar[abo].JaarAbonnement.Omschrijving.Equals("Gold"))
+                            {
+                                <li>X</li>
+                            }
+                            else
+                            {
+                                <li></li>
+                            }
+                        </ul>
+
+                    </td>
+
+                    <!-- Abo Silver -->
+                    <td>
+                        <ul>
+                        <!-- controle welk abonnement-->
+                        @if (Model.lijstJaarabonnementenInHuidigJaar[abo].JaarAbonnement.Omschrijving.Equals("Silver"))
+                        {
+                            <li>X</li>
+                        }
+                        else
+                        {
+                            <li></li>
+                        }
+                        </ul>
+                    </td>
+
+                    <!-- Abo Bronze -->
+                    <td>
+                        <!-- controle welk abonnement-->
+                        <ul>
+                            @if (Model.lijstJaarabonnementenInHuidigJaar[abo].JaarAbonnement.Omschrijving.Equals("Bronze"))
+                            {
+                                <li>X</li>
+                            }
+                            else
+                            {
+                                <li></li>
+                            }
+                            </ul>
+        </td>
+
+                }
+
+            </tr>
+                    @*<tr>
+                    <td>
+
+                        <ul>
+                            @for (int i = 0; i < Model.lijstJaarabonnementenInHuidigJaar.Count; i++)
+                            {
+                                @if (Model.lijstJaarabonnementenInHuidigJaar[i].Startdatum.Month.Equals(maand))
+                                {
+                                    <li>@Html.DisplayNameFor(model => Model.lijstCustomers[i].Bedrijfsnaam)</li>
+                                }
+                            }
+                        </ul>
+                    </td>
+
+
+                </tr>*@
+    
+
+
+
+

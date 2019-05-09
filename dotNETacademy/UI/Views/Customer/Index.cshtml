@@ -1,0 +1,119 @@
+﻿@model dotNETacademy.ViewModel.CustomerInfoViewModel
+
+@{
+    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div>
+    <h2>Dashboard van @Html.DisplayFor(model => model.Customer.Bedrijfsnaam)</h2>
+    <hr />
+</div>
+
+<div class="row">
+    <div class="container border col-lg-4 col-md-5 p-2 m-2 bg-dark text-white shadow">
+        <center>
+            <h4 class="mb-2">Abonnement</h4>
+            <i class="fas fa-medal fa-2x mb-3"></i>
+            @if (Model.Jaarabonnement != null)
+            {
+                <p>
+                    @Model.Jaarabonnement.JaarAbonnement.Omschrijving.ToUpper()<br />
+                    Geldig tot @Model.Jaarabonnement.Einddatum.ToShortDateString()
+                </p>
+            }
+            else
+            {
+                <p>
+                    Nog geen abonnement afgesloten!
+                </p>
+            }
+            <p class="mb-3">
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-light" asp-controller="Jaarabonnement" asp-action="Index" asp-route-id="@Model.Customer.Id">Beheren</a>
+                }
+                else
+                {
+                    <a class="btn btn-light" asp-controller="Jaarabonnement" asp-action="Index" asp-route-id="@Model.Customer.Id">Bekijken</a>
+                }
+            </p>
+        </center>
+    </div>
+    <div class="container border col-lg-4 col-md-5 p-2 m-2 bg-dark text-white shadow">
+        <center>
+            <h4>Deelnemers</h4>
+            <i class="fas fa-users fa-2x mb-3"></i>
+            <p>
+                Totaal aantal: @Model.AantalDeelnemers
+            </p>
+            <p class="mb-3">
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-light" asp-controller="Deelnemer" asp-action="Index_PerCustomer" asp-route-id="@Model.Customer.Id">Beheren</a>
+                }
+                else
+                {
+                    <a class="btn btn-light" asp-controller="Customer" asp-action="Deelnemers" asp-route-id="@Model.Customer.Id">Bekijken</a>
+                }
+            </p>
+
+        </center>
+    </div>
+    <div class="container border col-lg-4 col-md-5 p-2 m-2 bg-dark text-white shadow">
+        <center>
+            <h4>Facturatie</h4>
+            <i class="fas fa-file-invoice-dollar fa-2x mb-3"></i>
+            @*<p>Totaal betaald: @Model.TotaalBedragFacturen</p>*@
+            <p>Totaal aantal: @Model.AantalFacturen</p>
+            <p class="mb-3">
+                <a class="btn btn-light" asp-controller="Customer" asp-action="Facturatie" asp-route-id="@Model.Customer.Id">Bekijken</a>
+            </p>
+        </center>
+    </div>
+    <div class="container border col-lg-4 col-md-5 p-2 m-2 bg-dark text-white shadow">
+        <center>
+            <h4>Credits</h4>
+            <i class="fas fa-coins fa-2x mb-3"></i>
+            <p>Huidig aantal: @Model.HuidigeCredits</p>
+            <div class="mb-3">
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-light" asp-controller="Credit" asp-action="EditCustomer" asp-route-id="@Model.Customer.Id">Beheren</a>
+                    @*<button class="btn btn-light" id="btnclick" type="button" data-toggle="modal" data-target="#customerCredits">
+                        Beheren
+                    </button>
+
+                    <div class="modal fade" id="customerCredits" tabindex="-1" role="dialog" aria-labelledby="customerCredits" aria-hidden="true" style="color:black">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <form asp-action="EditCustomer">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editCredits">Credits aanpassen</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <input type="hidden" asp-for="Customer.Id" />
+                                        <div class="form-group">
+                                            <label asp-for="Customer.HuidigeCredits" class="control-label"></label>
+                                            <input asp-for="Customer.HuidigeCredits" class="form-control" />
+                                            <span asp-validation-for="Customer.HuidigeCredits" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleren</button>
+                                        <button type="submit" value="Save" class="btn btn-primary">Opslaan</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>*@
+                }
+            </div>
+        </center>
+    </div>
+</div>

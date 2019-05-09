@@ -1,0 +1,206 @@
+﻿@model dotNETacademy.ViewModel.DeelnemerDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div>
+    <h2>Dashboard van @Html.DisplayFor(model => model.Deelnemer.Naam) @Html.DisplayFor(model => model.Deelnemer.Voornaam)</h2>
+    <hr />
+</div>
+
+<!-- bread crumbs -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        @if (User.IsInRole("Admin"))
+        {            
+            <li class="breadcrumb-item"><a asp-controller="Customer" asp-action="Index" asp-route-id="@Model.Customer.Id">@Model.Customer.Bedrijfsnaam</a></li>  
+            <li class="breadcrumb-item"><a asp-controller="Deelnemer" asp-action="Index_PerCustomer" asp-route-id="@Model.Customer.Id">Deelnemers</a></li>              
+            <li class="breadcrumb-item active" aria-current="page">@Model.Deelnemer.Voornaam @Model.Deelnemer.Naam</li>
+        }
+        else
+        {
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Data</li>
+        }
+    </ol>
+</nav>
+
+
+<div class="row">
+    <div class="col-lg-4 d-block">
+        <div class="container border rounded p-2 m-2 bg-info shadow">
+            <center>
+                <div class="col-12">
+                    <h2>Opleiding</h2>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <i class="fas fa-chart-line fa-4x"></i>
+                    </div>
+                    <div class="col-9">
+                        <p>
+                            @Model.Opleiding
+                        </p>
+                        <div>
+                            Opleiding: @Html.DisplayFor(model=>model.Deelnemer.Opleiding.Beschrijving)<br/>
+                            Type opleiding: @Html.DisplayFor(model => model.Deelnemer.Opleiding.Type.Omschrijving)
+                        </div>
+                        <p></p>
+                    </div>
+                </div>
+                <p>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-primary" asp-action="" asp-route-id="">Beheren</a>
+                    }
+                    else if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="btn btn-primary" asp-action="" asp-route-id="">Bekijken</a>
+                    }
+                </p>
+            </center>
+        </div>
+    </div>
+
+        <div class="col-lg-4">
+            <div class="container border rounded p-2 m-2 bg-info shadow">
+                <center>
+                    <div class="col-12">
+                        <h2>Facturaties</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <i class="fas fa-coins fa-4x"></i>
+                        </div>
+                        <div class="col-9">
+                            <p>
+                                Openstaande credits: @Html.DisplayFor(model => model.Deelnemer.OpenstaandeCredits)<br/>
+                            
+                          Te factureren credits: @Html.DisplayFor(model => model.Deelnemer.OpenstaandeCredits)</p>
+                        </div>
+                    </div>
+                    <p>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-primary" asp-action="" asp-route-id="">Beheren</a>
+                        }
+                        else if (User.Identity.IsAuthenticated)
+                        {
+                            <a class="btn btn-primary" asp-action="" asp-route-id="">Bekijken</a>
+                        }
+                    </p>
+                </center>
+            </div>
+        </div>
+
+
+        <div class="col-lg-4">
+            <div class="container border rounded p-2 m-2 bg-info shadow">
+                <center>
+                    <div class="col-12">
+                        <h2>Evaluaties</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <i class="fas fa-graduation-cap fa-4x"></i>
+                        </div>
+                        <div class="col-9">
+                            <p>Aantal evaluaties: @Model.AantalEvaluaties</p>
+                           <p>Gemiddelde score: </p>
+                        </div>
+                    </div>
+                    <p>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn btn-primary" asp-controller="Evaluatie" asp-action="Index_PerDeelnemer" asp-route-id="@Model.Deelnemer.Id">Beheren</a>
+                        }
+                        else if (User.Identity.IsAuthenticated)
+                        {
+                            <a class="btn btn-primary" asp-controller="Evaluatie" asp-action="Index_PerDeelnemer" asp-route-id="@Model.Deelnemer.Id">Bekijken</a>
+                        }
+                    </p>
+                </center>
+            </div>
+        </div>
+
+
+    </div>
+
+    @*<div class="row">
+        <div class="card">
+            <div class="card-header">
+
+                <div class="card-title">
+                    <h2>Opleiding</h2>
+                </div>
+                <i class="fas fa-chart-line fa-3x"></i>
+            </div>
+            <div class="card-body">
+                @Html.DisplayFor(model => model.Deelnemer.Opleiding.Beschrijving)
+                Start datum: @Html.DisplayFor(model => model.Deelnemer.Opleiding.Type.Omschrijving)
+            </div>
+            <div class="card-footer">
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="btn btn-primary" asp-action="" asp-route-id="">Beheren</a>
+                }
+                else if (User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-primary" asp-action="" asp-route-id="">Bekijken</a>
+                }
+
+            </div>
+
+        </div>*@
+
+
+    @*<div class="card">
+            <div class="card-title">
+                <i class="fas fa-coins fa-3x"></i>
+                <div class="card-body">
+                    <div class="row">
+                        <h2>Facturaties</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            Openstaande credits: @Html.DisplayFor(model => model.Deelnemer.OpenstaandeCredits)
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        Te factureren credits: @Html.DisplayFor(model => model.Deelnemer.OpenstaandeCredits)
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+    @*<div class="card">
+            <div class="card-title">
+                <i class="fas fa-graduation-cap fa-3x"></i>
+                <div class="card-body">
+                    <div class="row">
+                        <h2>Evaluaties</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            Aantal evaluaties = @Html.DisplayFor(model => model.Deelnemer.Opleiding)
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <div>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-action="Edit" asp-route-id="@Model.Deelnemer.Id">Edit</a>
+            }
+            <a class="btn btn-primary" asp-action="Index">Terug naar overzicht</a>
+        </div>*@

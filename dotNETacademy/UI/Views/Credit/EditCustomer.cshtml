@@ -1,0 +1,57 @@
+﻿@model dotNETacademy.ViewModel.CustomerCreditsViewModel
+@addTagHelper *, Microsoft.
+@{
+    ViewData["Title"] = "EditCustomer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Credits van @Model.Customer.Bedrijfsnaam</h1>
+
+<hr />
+<form asp-action="EditCustomer">
+    <div class="row">
+        <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Customer.Id" />
+            <div class="form-group">
+                <label>Huidig aantal</label>
+                <input asp-for="Customer.HuidigeCredits" class="form-control" readonly />
+                <span asp-validation-for="Customer.HuidigeCredits" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button class="btn btn-primary mr-2" id="btnclick" type="button" data-toggle="modal" data-target="#customerCredits">
+            Beheren
+        </button>
+        <a class="btn btn-primary text-white" href="/Customer/Index/@Model.Customer.Id">Vorige</a>
+    </div>
+</form>
+
+<div class="modal fade" id="customerCredits" tabindex="-1" role="dialog" aria-labelledby="customerCredits" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCredits">Credits aanpassen<br />@Model.Customer.Bedrijfsnaam</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="EditCustomer">
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Customer.Id" />
+                    <div class="form-group">
+                        <label>Nieuw aantal</label>
+                        <input asp-for="Customer.HuidigeCredits" class="form-control" />
+                        <span asp-validation-for="Customer.HuidigeCredits" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleren</button>
+                    <button type="submit" value="Save" class="btn btn-primary">Opslaan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

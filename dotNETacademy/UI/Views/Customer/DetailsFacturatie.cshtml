@@ -1,0 +1,48 @@
+﻿@model dotNETacademy.ViewModel.FacturatieViewModel
+
+@{
+    ViewData["Title"] = "DetailsFacturatie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>DetailsFacturatie</h1>
+
+<div>
+    <h4>Factuur</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Factuur.FormattedDatum)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Factuur.FormattedDatum)
+        </dd>
+        @*<dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Factuur.Omschrijving)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Factuur.Omschrijving)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Factuur.Prijs)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Factuur.Prijs)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Factuur.IsVereffend)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Factuur.IsVereffend)
+        </dd>*@
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Factuur.BestandUrl)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Factuur.BestandUrl)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Facturatie">Terug naar facturatie</a>
+</div>

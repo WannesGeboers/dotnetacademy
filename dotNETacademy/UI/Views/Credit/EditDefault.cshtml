@@ -1,0 +1,59 @@
+﻿@model dotNETacademy.Common.Entities.Credit
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Default Settings</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="PrijsPerCredit" class="control-label"></label>
+                <input asp-for="PrijsPerCredit" class="form-control" readonly />
+                <span asp-validation-for="PrijsPerCredit" class="text-danger"></span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="">
+    <button class="btn btn-primary" id="btnclick" type="button" data-toggle="modal" data-target="#defaultCredits">
+        Beheren
+    </button>
+</div>
+
+<div class="modal fade" id="defaultCredits" tabindex="-1" role="dialog" aria-labelledby="defaultCredits" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Default waarde credit aanpassen</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="EditDefault">
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label asp-for="PrijsPerCredit" class="control-label"></label>
+                        <input asp-for="PrijsPerCredit" class="form-control" />
+                        <span asp-validation-for="PrijsPerCredit" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleren</button>
+                    <button type="submit" value="Save" class="btn btn-primary">Opslaan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

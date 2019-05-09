@@ -1,0 +1,56 @@
+﻿@model dotNETacademy.ViewModel.Admin_CustomersViewModel
+@{
+    ViewData["Title"] = "Admin_Customers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>Lijst van alle klanten</h1>
+
+<a asp-area="Identity" asp-page="/Account/Register"><i class="fas fa-user-plus mb-2 mr-2"></i>Nieuwe klant</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(Model => Model.Customer.Bedrijfsnaam)
+            </th>
+            <th>
+                Abonnement
+            </th>
+            <th>
+                Te factureren credits
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Customers)
+        {
+            int som = 0;
+            for (int i = 0; i < item.Deelnemers.Count; i++)
+            {
+                som += item.Deelnemers[i].OpenstaandeCredits;
+            }
+
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Bedrijfsnaam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jaarabonnementen.FirstOrDefault().JaarAbonnement.Omschrijving)
+                </td>
+                <td>
+                    @som
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Customer" asp-action="Index" asp-route-id="@item.Id">Beheren</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+

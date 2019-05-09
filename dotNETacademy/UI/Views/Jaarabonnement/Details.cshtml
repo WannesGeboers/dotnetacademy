@@ -1,0 +1,53 @@
+﻿@model dotNETacademy.ViewModel.DetailsAbonnementViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Details van jaarabonnement </h3>
+<!-- bread crumbs -->
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        @if (User.IsInRole("Admin"))
+        {
+            <li class="breadcrumb-item"><a asp-controller="Customer" asp-action="Index" asp-route-id="@Model.Customer.Id">@Model.Customer.Bedrijfsnaam</a></li>
+            <li class="breadcrumb-item"><a asp-controller="Jaarabonnement" asp-action="Index" asp-route-id="@Model.Customer.Id">Jaarabonnementen</a></li>
+
+            <li class="breadcrumb-item active" aria-current="page">@Model.Jaarabonnement.Startdatum - @Model.Jaarabonnement.Einddatum</li>
+        }
+        else
+        {
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Library</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Data</li>
+        }
+    </ol>
+</nav>
+<div>
+    <h4>Jaarabonnement</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Jaarabonnement.Prijs)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Jaarabonnement.Prijs)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Jaarabonnement.Startdatum)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Jaarabonnement.Startdatum)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Jaarabonnement.Einddatum)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Jaarabonnement.Einddatum)
+        </dd>
+    </dl>
+</div>
+@*<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>*@

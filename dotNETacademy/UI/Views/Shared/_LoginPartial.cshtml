@@ -1,0 +1,25 @@
+@using Microsoft.AspNetCore.Identity
+@using dotNETacademy.Areas.Identity.Data
+
+@inject SignInManager<Customer> SignInManager
+@inject UserManager<Customer> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a class="btn btn-link text-dark text-center" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="fas fa-user"></i></a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline text-center" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link text-dark text-center"><i class="fas fa-sign-out-alt fa-2x"></i></button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark text-center" asp-area="Identity" asp-page="/Account/Login"><i class="fas fa-sign-in-alt"></i></a>
+        </li>
+    }
+</ul>

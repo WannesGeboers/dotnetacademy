@@ -1,0 +1,41 @@
+﻿@model dotNETacademy.ViewModel.EvaluatieViewModel
+<div class="modal-dialog">
+    <div class="modal-content">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div class="modal-title text-center">
+                <h4>Nieuwe speler toevoegen</h4>
+                <hr />
+            </div>
+
+            <div class="modal-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Evaluatie.DeelnemerId" />
+                <div class="form-group">
+                    <label asp-for="Evaluatie.Datum" class="control-label"></label>
+                    <input asp-for="Evaluatie.Datum" class="form-control" />
+                    <span asp-validation-for="Evaluatie.Datum" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Evaluatie.Omschrijving" class="control-label"></label>
+                    <input asp-for="Evaluatie.Omschrijving" class="form-control" />
+                    <span asp-validation-for="Evaluatie.Omschrijving" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Evaluatie.Punt" class="control-label"></label>
+                    <input asp-for="Evaluatie.Punt" class="form-control" />
+                    <span asp-validation-for="Evaluatie.Punt" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Bestand" />
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <input asp-for="DeelnemerId" type="hidden"/>
+                <a class="btn btn-danger" asp-action="">Annuleren</a>
+                <input asp-for="Evaluatie.DeelnemerId" type="text" value="@Model.DeelnemerId"/>
+                <input type="submit" value="Toevoegen" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
