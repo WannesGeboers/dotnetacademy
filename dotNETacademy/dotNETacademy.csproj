@@ -19,7 +19,6 @@
 
 
   <ItemGroup>
-    <Folder Include="COMMON\" />
     <Folder Include="UI\Views\Admin\PartialViews\" />
     <Folder Include="wwwroot\bestanden\evaluaties\" />
     <Folder Include="wwwroot\NewFolder\" />
